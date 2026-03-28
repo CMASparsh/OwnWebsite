@@ -62,18 +62,18 @@
     .background-header .navbar-nav .nav-link:hover,.background-header .navbar-nav .active>.nav-link{color:var(--gold)!important;}
     .navbar .navbar-brand{outline:none;display:flex;align-items:center;gap:12px;}
  .logo-mark {
-    width: 48px; 
+    width: 48px;
     height: 48px;
-    background-color: #ffffff; /* White background makes the logo visible */
-    border-radius: 50%; /* Circular shape to match your theme */
+    background-color: #ffffff;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px; /* Prevents the logo from touching the edges */
+    padding: 0px;
     flex-shrink: 0;
-    border: 2px solid var(--gold); /* Adds a professional gold border */
+    border: 2px solid var(--gold);
+    overflow: hidden; /* This line prevents the image from overlapping the border */
 }
-
 .brand-logo-img {
     width: 100%;
     height: 100%;
@@ -999,9 +999,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4 footer-item">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:13px;">
-          <div class="logo-mark"><svg viewBox="0 0 26 26" fill="none"><path d="M18 7.5C17 5.5 15.2 4.5 13 4.5C9.5 4.5 7.5 7 7.5 9.5C7.5 12 9 13.5 12.5 14.5L14 15C16.5 15.8 18.5 17 18.5 19.5C18.5 22 16.5 22.5 13.5 22.5C10.8 22.5 8.5 21 7.5 19" stroke="#c49a2a" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="2" x2="13" y2="4.5" stroke="#c49a2a" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="22.5" x2="13" y2="25" stroke="#c49a2a" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <div><div class="brand-name" style="color:#fff;">Sparsh Saxena &amp; Co.</div><div class="brand-tag">Cost Accountants</div></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:13px;">8
+          <div class="logo-mark" style="background-color:#fff;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;padding:0px;flex-shrink:0;border:2px solid var(--gold2);overflow:hidden;">
+    <!-- Logo Image -->
+    <img src="sparsh-logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+</div>          <div><div class="brand-name" style="color:#fff;">Sparsh Saxena &amp; Co.</div><div class="brand-tag">Cost Accountants</div></div>
         </div>
         <p>A proprietorship firm of Cost &amp; Management Accountants providing expert financial and compliance services across India since 2023.</p>
         <div class="footer-icai-badge"><b>ICAI Reg. No. 006322</b> &nbsp;|&nbsp; PAN: IUMPS7671R &nbsp;|&nbsp; Membership No. 54596</div>
