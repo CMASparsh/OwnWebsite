@@ -383,7 +383,7 @@
     align-items: center;
 }
   </style>
-<script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net" async></script>
 </head>
 <body>
 
@@ -1098,42 +1098,44 @@
   })();
 
  window.onload = function() {
-  // 1. Force the loader to hide immediately
+  // 1. Hide Loader
   const loader = document.querySelector('.loader') || document.getElementById('loader');
   if (loader) { loader.style.display = 'none'; }
 
-  // 2. Initialize EmailJS immediately if it's there
-  if (typeof emailjs !== 'undefined') {
-    emailjs.init("lj8DC8r9Lcw_qPFTp");
-  }
-
-  // 3. Setup the form
+  // 2. Setup the form
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
       event.preventDefault();
       
-      // If still undefined, the library failed to download
-      if (typeof emailjs === 'undefined') {
-        alert("The email service failed to load. Please check your internet connection and refresh.");
-        return;
-      }
-
       const btn = event.target.querySelector('button');
-      btn.innerText = 'Sending...';
+      const originalText = btn.innerText;
 
-      emailjs.sendForm('service_qbuqugf', 'template_o2nqnjk', this)
-        .then(function() {
-          alert('Message Sent Successfully!');
-          btn.innerText = 'SEND MESSAGE';
-          contactForm.reset();
-        }, function(error) {
-          alert('Error: ' + JSON.stringify(error));
-          btn.innerText = 'SEND MESSAGE';
-        });
+      // CHECK AND INIT: This ensures it initializes even if it loaded late
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: "lj8DC8r9Lcw_qPFTp" });
+        
+        btn.innerText = 'Sending...';
+        btn.disabled = true;
+
+        emailjs.sendForm('service_qbuqugf', 'template_o2nqnjk', this)
+          .then(function() {
+            alert('Message Sent Successfully!');
+            btn.innerText = originalText;
+            btn.disabled = false;
+            contactForm.reset();
+          }, function(error) {
+            alert('Error: ' + JSON.stringify(error));
+            btn.innerText = originalText;
+            btn.disabled = false;
+          });
+      } else {
+        alert("The email service is still loading due to slow network. Please wait 5 seconds and try again.");
+      }
     });
   }
 };
+
 
 </script>
 </body>
