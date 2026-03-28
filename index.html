@@ -14,8 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
-
   <style>
     :root{--navy:#0b1d3a;--navy2:#132848;--gold:#c49a2a;--gold2:#e0b84a;--light:#f7f9fc;--border:#e4e8f0;--text:#3d4d66;--textl:#7a8ba6;}
     *{box-sizing:border-box;}
@@ -385,6 +383,7 @@
     align-items: center;
 }
   </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
 </head>
 <body>
 
@@ -723,7 +722,7 @@
   </div>
 </div>
 
-<!-- ========== REGULATORY UPDATES ========== -->
+<!-- ========== REGULATORY UPDATES ========== 
 <div class="reg-updates" id="updates">
   <div class="container">
     <div class="row">
@@ -808,7 +807,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Testimonials -->
 <div class="testimonials">
@@ -1076,101 +1075,62 @@
       nav: false, dots: true,
       responsive: { 0:{ items:1 }, 768:{ items:2 } }
     });
+});
 
-    // Load first tab
-    loadUpdates('it');
-  });
+   // --- Tab switching ---
+  function switchTab(tab) {
+    document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.reg-pane').forEach(p => p.classList.remove('active'));
+    const tabEl = document.getElementById('tab-' + tab);
+    const panelEl = document.getElementById('panel-' + tab);
+    if (tabEl) tabEl.classList.add('active');
+    if (panelEl) panelEl.classList.add('active');
+  } // <--- MAKE SURE THIS BRACE EXISTS
 
-  // Tab switching
-  function switchTab(tab){
-    document.querySelectorAll('.reg-tab').forEach(function(t){ t.classList.remove('active'); });
-    document.querySelectorAll('.reg-panel').forEach(function(p){ p.classList.remove('active'); });
-    document.getElementById('tab-'+tab).classList.add('active');
-    document.getElementById('panel-'+tab).classList.add('active');
-    var container = document.getElementById('updates-'+tab);
-    if(container.querySelector('.updates-loading')){ loadUpdates(tab); }
-  }
-
-  // AI regulatory updates via Anthropic API
-  async function loadUpdates(tab){
-    var container = document.getElementById('updates-'+tab);
-    var btn = document.querySelector('#panel-'+tab+' .refresh-btn');
-    if(btn){ btn.disabled = true; btn.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Loading'; }
-    container.innerHTML = '<div class="updates-loading"><div class="spinner"></div>Fetching latest updates from AI...</div>';
-
-    var prompts = {
-      it: 'List 6 important recent Income Tax updates in India (2024–2025): circulars, notifications, amendments, or deadline changes. For each provide: date (month/year), title, one-sentence description of what changed, and type (Circular/Notification/Amendment/Deadline). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation, no code fences.',
-      gst: 'List 6 important recent GST India updates (2024–2025): circulars, notifications, rate changes, or compliance changes. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Rate Change/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
-      mca: 'List 6 important recent Companies Act / MCA India updates (2024–2025): amendments, notifications, or compliance deadlines. For each: date (month/year), title, one-sentence description, type (Notification/Amendment/Circular/Compliance). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
-      icai: 'List 6 important recent ICAI (Institute of Cost Accountants of India) updates (2024–2025): cost audit rules, CAS updates, threshold changes, circulars. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Guideline/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.'
-    };
-
-    var badgeMap = { it:'badge-it', gst:'badge-gst', mca:'badge-mca', icai:'badge-icai' };
-
-    try {
-      var resp = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content: prompts[tab] }]
-        })
-      });
-      var data = await resp.json();
-      var raw = (data.content||[]).map(function(b){ return b.text||''; }).join('');
-      raw = raw.replace(/```json|```/g,'').trim();
-      // extract JSON array
-      var match = raw.match(/\[[\s\S]*\]/);
-      if(!match) throw new Error('No JSON array found');
-      var items = JSON.parse(match[0]);
-      var html = '';
-      items.forEach(function(item){
-        html += '<div class="update-item">'
-          + '<div class="u-date">'+escHtml(item.date||'')+'</div>'
-          + '<div class="u-title">'+escHtml(item.title||'')+'</div>'
-          + '<div class="u-desc">'+escHtml(item.desc||'')+'</div>'
-          + '<span class="u-badge '+badgeMap[tab]+'">'+escHtml(item.type||'')+'</span>'
-          + '</div>';
-      });
-      container.innerHTML = html;
-    } catch(e) {
-      container.innerHTML = '<div class="update-item"><div class="u-title" style="color:var(--textl);padding:8px 0;">Could not load updates automatically.</div><div class="u-desc">Please visit the official portal directly using the link below for the latest regulatory updates and notifications.</div></div>';
-    }
-    if(btn){ btn.disabled = false; btn.innerHTML = '<i class="fa fa-refresh"></i> Refresh'; }
-  }
-
-  function escHtml(s){ var d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
-</script>
-
-<script type="text/javascript">
+  // --- EmailJS ---
   (function() {
-    // Initialize with your Public Key
-    emailjs.init("YOUR_PUBLIC_KEY");
+    // Check for correct spelling: 'emailjs' (not emailis)
+    if (window.emailjs) {
+      emailjs.init({
+        publicKey: "lj8DC8r9Lcw_qPFTp", // Case-sensitive! Double check this in your dashboard.
+      });
+    }
   })();
 
-  window.onload = function() {
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
+ window.onload = function() {
+  // 1. Hide Loader
+  const loader = document.querySelector('.loader') || document.getElementById('loader');
+  if (loader) { loader.style.display = 'none'; }
+
+  // 2. Setup Form
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
       event.preventDefault();
       
+      // SAFETY CHECK: Ensure the library is actually loaded
+      if (typeof emailjs === 'undefined') {
+        alert("The email service is still loading. Please wait a second and try again.");
+        return;
+      }
+
       const btn = event.target.querySelector('button');
       btn.innerText = 'Sending...';
 
-      // These IDs come from your EmailJS Dashboard
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      emailjs.sendForm('service_qbuqugf', 'template_o2nqnjk', this)
         .then(function() {
           alert('Message Sent Successfully!');
           btn.innerText = 'SEND MESSAGE';
-          document.getElementById('contact-form').reset();
+          contactForm.reset();
         }, function(error) {
-          alert('Failed to send message. Please try again.');
+          alert('Failed to send message.');
           console.log('FAILED...', error);
           btn.innerText = 'SEND MESSAGE';
         });
     });
   }
+};
+
 </script>
-
-
 </body>
 </html>
