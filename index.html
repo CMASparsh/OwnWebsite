@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
+
   <style>
     :root{--navy:#0b1d3a;--navy2:#132848;--gold:#c49a2a;--gold2:#e0b84a;--light:#f7f9fc;--border:#e4e8f0;--text:#3d4d66;--textl:#7a8ba6;}
     *{box-sizing:border-box;}
@@ -245,6 +247,17 @@
     .exp-tags{display:flex;flex-wrap:wrap;gap:7px;}
     .exp-tag{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 12px;font-size:12px;color:rgba(255,255,255,.68);transition:all .2s;}
     .exp-tag:hover{background:rgba(196,154,42,.12);border-color:rgba(196,154,42,.3);color:var(--gold2);}
+    .team-section-divider{border:none;border-top:1px solid rgba(196,154,42,.18);margin:52px 0 44px;}
+    .team-sub-heading{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;}
+    .team-sub-desc{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:30px;}
+    .team-card{background:rgba(255,255,255,.05);border:1px solid rgba(196,154,42,.2);border-radius:12px;padding:24px 18px;text-align:center;height:100%;transition:border-color .2s,background .2s;}
+    .team-card:hover{background:rgba(255,255,255,.08);border-color:rgba(196,154,42,.45);}
+    .team-initials-wrap{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(135deg,#1a3570,var(--navy2));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(196,154,42,.1);}
+    .team-initials{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--gold2);}
+    .team-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:3px;}
+    .team-occ{font-size:11px;color:var(--gold2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+    .team-expertise{display:inline-block;background:rgba(196,154,42,.1);border:1px solid rgba(196,154,42,.2);border-radius:4px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.7);margin-bottom:12px;}
+    .team-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.75;text-align:left;}
 
     /* ===== REGULATORY UPDATES ===== */
     .reg-updates{padding:88px 0;background:var(--light);}
@@ -382,8 +395,28 @@
     justify-content: center;
     align-items: center;
 }
+
+    /* SERVICE DETAIL MODAL */
+    .svc-modal-overlay{position:fixed;inset:0;background:rgba(11,29,58,.78);z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
+    .svc-modal-overlay.active{opacity:1;visibility:visible;}
+    .svc-modal{background:#fff;border-radius:14px;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .35s cubic-bezier(.22,.68,0,1.2);box-shadow:0 24px 80px rgba(11,29,58,.35);}
+    .svc-modal-overlay.active .svc-modal{transform:translateY(0);}
+    .svc-modal-header{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:28px 32px 22px;border-radius:14px 14px 0 0;position:sticky;top:0;z-index:1;}
+    .svc-modal-header .modal-icon{margin-bottom:14px;}
+    .svc-modal-header .modal-icon svg{width:38px;height:38px;stroke:var(--gold2);fill:none;stroke-width:1.6;}
+    .svc-modal-header h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3;}
+    .svc-modal-tag{font-size:.66rem;font-weight:700;color:var(--gold2);letter-spacing:.14em;text-transform:uppercase;}
+    .svc-modal-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.13);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+    .svc-modal-close:hover{background:rgba(196,154,42,.55);}
+    .svc-modal-body{padding:26px 32px 28px;}
+    .svc-modal-body .modal-overview{font-size:14px;color:var(--text);line-height:27px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+    .svc-modal-body h5{font-size:11.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+    .svc-modal-body ul.modal-list{margin-bottom:0;padding:0;}
+    .svc-modal-body ul.modal-list li{position:relative;padding-left:20px;font-size:13.5px;color:var(--text);line-height:22px;margin-bottom:11px;list-style:none;}
+    .svc-modal-body ul.modal-list li::before{content:'';position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--gold);}
+    .svc-modal-footer{padding:0 32px 28px;display:flex;gap:12px;flex-wrap:wrap;}
+    .service-item{cursor:pointer;}
   </style>
-<script type="text/javascript" src="https://cdn.jsdelivr.net" async></script>
 </head>
 <body>
 
@@ -435,7 +468,7 @@
           <li class="nav-item active"><a class="nav-link" href="#top">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#proprietor">Our CMA</a></li>
+          <li class="nav-item"><a class="nav-link" href="#proprietor">Our Team</a></li>
           <li class="nav-item"><a class="nav-link" href="#updates">Updates</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -495,7 +528,7 @@
           <p class="slide-desc">From GST registration and Income Tax filing to Cost Audits, ESIC/EPFO compliance and IBC matters — handled with precision and professional excellence across India.</p>
           <div class="slide-btns">
             <a href="#services" class="filled-button">Our Services</a>
-            <a href="#proprietor" class="border-button">Meet Our CMA</a>
+            <a href="#proprietor" class="border-button">Meet Our Team</a>
           </div>
         </div>
       </div>
@@ -503,7 +536,7 @@
         <div class="deco-card">
           <div class="deco-label">Key Credentials</div>
           <div class="deco-list">
-            <div class="deco-item"><div class="deco-dot"></div><span>ICAI Reg. No. 006322</span></div>
+            <div class="deco-item"><div class="deco-dot"></div><span>ICMAI Reg. No. 006322</span></div>
             <div class="deco-item"><div class="deco-dot"></div><span>Membership No. 54596</span></div>
             <div class="deco-item"><div class="deco-dot"></div><span>ACMA, B.Com Qualified</span></div>
             <div class="deco-item"><div class="deco-dot"></div><span>Head Office: Bulandshahr, UP</span></div>
@@ -552,7 +585,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-6 stat-item"><div class="stat-number">2023</div><div class="stat-label">Established</div></div>
-      <div class="col-md-3 col-6 stat-item"><div class="stat-number">006322</div><div class="stat-label">ICAI Reg. No.</div></div>
+      <div class="col-md-3 col-6 stat-item"><div class="stat-number">006322</div><div class="stat-label">ICMAI Reg. No.</div></div>
       <div class="col-md-3 col-6 stat-item"><div class="stat-number">24+</div><div class="stat-label">Audit Locations</div></div>
       <div class="col-md-3 col-6 stat-item"><div class="stat-number">100%</div><div class="stat-label">Compliance Rate</div></div>
     </div>
@@ -579,15 +612,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12"><div class="section-heading"><div class="section-eyebrow" style="justify-content:center;margin-bottom:8px;">Our Services</div><h2>Comprehensive <em>Financial Solutions</em></h2><span>Expert audit, taxation, and advisory services tailored to your business needs</span></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div><div class="down-content"><h4>Cost Audit &amp; Stock Audit</h4><p>Statutory cost audits, maintenance of cost records, stock verification, physical audit assignments, and CAS compliance.</p><span class="svc-tag">Core Speciality →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="down-content"><h4>GST Registration &amp; Filing</h4><p>Complete GST registration, periodic return filing, appeals handling, ITC utilization certification, and compliance advisory.</p><span class="svc-tag">Indirect Tax →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="down-content"><h4>Income Tax &amp; TDS Filing</h4><p>Accurate e-filing of income tax returns, TDS compliance, representation in scrutiny cases, and strategic tax planning.</p><span class="svc-tag">Direct Tax →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><div class="down-content"><h4>Company Incorporation &amp; ROC</h4><p>Company &amp; LLP incorporation, MCA/ROC compliance, secretarial assignments, foreign company registration, and MSME registration.</p><span class="svc-tag">Corporate Law →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="down-content"><h4>CMA Data &amp; Project Reports</h4><p>Preparation of CMA data, detailed project reports for bank loans, term loans, OD/CC limits, and investment approvals.</p><span class="svc-tag">Finance Advisory →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="down-content"><h4>ESIC &amp; EPFO Compliance</h4><p>ESIC and EPFO registrations, periodic returns, reconciliations, payroll compliance, and contractual payroll management.</p><span class="svc-tag">HR Compliance →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="down-content"><h4>Management Consulting</h4><p>Project appraisal, rehabilitation &amp; project management, due diligence for M&amp;A, enterprise risk management, and strategic advisory.</p><span class="svc-tag">Strategic Advisory →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="2"/></svg></div><div class="down-content"><h4>Insolvency &amp; IBC Matters</h4><p>Assignments under the Insolvency &amp; Bankruptcy Code 2016, corporate insolvency resolution, liquidation support, and compliance advisory.</p><span class="svc-tag">IBC Specialist →</span></div></div></div>
-      <div class="col-md-4 col-sm-6"><div class="service-item"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/></svg></div><div class="down-content"><h4>Personal Financial Advisory</h4><p>Tax advisory, investment planning, net worth &amp; turnover certifications, and tailored financial solutions for individuals and businesses.</p><span class="svc-tag">Personal Finance →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="cost-audit" onclick="openSvcModal('cost-audit')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div><div class="down-content"><h4>Cost Audit &amp; Stock Audit</h4><p>Statutory cost audits, maintenance of cost records, stock verification, physical audit assignments, and CAS compliance.</p><span class="svc-tag">Core Speciality →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="gst" onclick="openSvcModal('gst')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="down-content"><h4>GST Registration &amp; Filing</h4><p>Complete GST registration, periodic return filing, appeals handling, ITC utilization certification, and compliance advisory.</p><span class="svc-tag">Indirect Tax →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="income-tax" onclick="openSvcModal('income-tax')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="down-content"><h4>Income Tax &amp; TDS Filing</h4><p>Accurate e-filing of income tax returns, TDS compliance, representation in scrutiny cases, and strategic tax planning.</p><span class="svc-tag">Direct Tax →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="company-roc" onclick="openSvcModal('company-roc')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><div class="down-content"><h4>Company Incorporation &amp; ROC</h4><p>Company &amp; LLP incorporation, MCA/ROC compliance, secretarial assignments, foreign company registration, and MSME registration.</p><span class="svc-tag">Corporate Law →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="cma-data" onclick="openSvcModal('cma-data')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="down-content"><h4>CMA Data &amp; Project Reports</h4><p>Preparation of CMA data, detailed project reports for bank loans, term loans, OD/CC limits, and investment approvals.</p><span class="svc-tag">Finance Advisory →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="esic-epfo" onclick="openSvcModal('esic-epfo')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="down-content"><h4>ESIC &amp; EPFO Compliance</h4><p>ESIC and EPFO registrations, periodic returns, reconciliations, payroll compliance, and contractual payroll management.</p><span class="svc-tag">HR Compliance →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="mgmt-consulting" onclick="openSvcModal('mgmt-consulting')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="down-content"><h4>Management Consulting</h4><p>Project appraisal, rehabilitation &amp; project management, due diligence for M&amp;A, enterprise risk management, and strategic advisory.</p><span class="svc-tag">Strategic Advisory →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="insolvency" onclick="openSvcModal('insolvency')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="2"/></svg></div><div class="down-content"><h4>Insolvency &amp; IBC Matters</h4><p>Assignments under the Insolvency &amp; Bankruptcy Code 2016, corporate insolvency resolution, liquidation support, and compliance advisory.</p><span class="svc-tag">IBC Specialist →</span></div></div></div>
+      <div class="col-md-4 col-sm-6"><div class="service-item" data-svc="personal-finance" onclick="openSvcModal('personal-finance')"><div class="svc-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/></svg></div><div class="down-content"><h4>Personal Financial Advisory</h4><p>Tax advisory, investment planning, net worth &amp; turnover certifications, and tailored financial solutions for individuals and businesses.</p><span class="svc-tag">Personal Finance →</span></div></div></div>
     </div>
   </div>
 </div>
@@ -629,7 +662,7 @@
           <p>We serve a diverse clientele including corporates, banks, government departments, and individual businesses — bringing expertise across auditing, direct and indirect taxation, corporate law, insolvency, and project finance.</p>
           <p>The firm has worked with the GST Department on ITC utilization certifications, assisted in Income Tax scrutiny cases, conducted revenue audits across 24+ locations, and provides ongoing consultancy in Cost Records, ESIC/EPFO, and GST compliance.</p>
           <div style="margin-top:18px;">
-            <div class="ahl"><div class="ahl-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><h4>ICAI Registered Firm</h4><p>Reg. No. 006322 &nbsp;|&nbsp; Member, Institute of Cost Accountants of India.</p></div></div>
+            <div class="ahl"><div class="ahl-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><h4>ICMAI Registered Firm</h4><p>Reg. No. 006322 &nbsp;|&nbsp; Member, Institute of Cost Accountants of India.</p></div></div>
             <div class="ahl"><div class="ahl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><h4>Timely &amp; Reliable</h4><p>Accurate, on-time delivery of financial reports, returns, and compliance filings every single time.</p></div></div>
             <div class="ahl"><div class="ahl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div><h4>Client-Centric Philosophy</h4><p>Customized solutions tailored to each client's specific industry, size, and compliance needs.</p></div></div>
           </div>
@@ -640,7 +673,7 @@
           <h3>Firm Details</h3>
           <div class="fd-row"><span class="fd-label">Firm Name</span><span class="fd-val">Sparsh Saxena &amp; Co.</span></div>
           <div class="fd-row"><span class="fd-label">Type</span><span class="fd-val">Proprietorship Firm</span></div>
-          <div class="fd-row"><span class="fd-label">ICAI Reg. No.</span><span class="fd-val">006322</span></div>
+          <div class="fd-row"><span class="fd-label">ICMAI Reg. No.</span><span class="fd-val">006322</span></div>
           <div class="fd-row"><span class="fd-label">Constituted</span><span class="fd-val">11th October 2023</span></div>
           <div class="fd-row"><span class="fd-label">Membership No.</span><span class="fd-val">54596</span></div>
           <div class="fd-row"><span class="fd-label">Head Office</span><span class="fd-val">Bulandshahr, UP</span></div>
@@ -673,7 +706,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="why-card-inline"><div class="why-icon-sm"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div><h3>Qualified Professionals</h3><p>ICAI-certified Cost &amp; Management Accountants with deep expertise across auditing, taxation, and corporate law.</p></div></div>
+        <div class="why-card-inline"><div class="why-icon-sm"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div><h3>Qualified Professionals</h3><p>ICMAI-certified Cost &amp; Management Accountants with deep expertise across auditing, taxation, and corporate law.</p></div></div>
         <div class="why-card-inline"><div class="why-icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div><div><h3>Comprehensive Services</h3><p>One-stop solution for all your costing, taxation, compliance, and financial advisory requirements.</p></div></div>
         <div class="why-card-inline"><div class="why-icon-sm"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h3>Integrity &amp; Excellence</h3><p>Committed to the highest ethical standards and professional integrity in every engagement.</p></div></div>
       </div>
@@ -681,14 +714,19 @@
   </div>
 </div>
 
-<!-- CMA / Proprietor -->
+<!-- CMA / Proprietor & Team -->
 <div class="proprietor-section" id="proprietor">
   <div class="container">
     <div class="row">
       <div class="col-md-12 mb-5">
-        <div class="section-eyebrow" style="color:var(--gold);">Our Leadership</div>
-        <h2 style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#fff;margin-bottom:9px;">CMA <em style="font-style:italic;color:var(--gold2);">Sparsh Saxena</em></h2>
-        <p style="color:rgba(255,255,255,.52);max-width:520px;font-size:14px;">Founder &amp; Proprietor — A qualified Cost Accountant dedicated to precision-driven financial solutions.</p>
+        <div class="section-eyebrow" style="color:var(--gold);">Meet the People Behind the Firm</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#fff;margin-bottom:9px;">Our <em style="font-style:italic;color:var(--gold2);">Team</em></h2>
+        <p style="color:rgba(255,255,255,.52);max-width:580px;font-size:14px;">A dedicated team of advocates, accountants, and compliance specialists working together to deliver precision-driven legal and financial solutions for our clients.</p>
+      </div>
+      <!-- CMA Sparsh Saxena -->
+      <div class="col-md-12 mb-3">
+        <div class="team-sub-heading">Our CMA</div>
+        <p class="team-sub-desc">Founder &amp; Proprietor — Qualified Cost Accountant leading the firm.</p>
       </div>
       <div class="col-md-4 mb-4 mb-md-0">
         <div class="prop-card">
@@ -697,7 +735,7 @@
 </div>
           <div class="prop-name">CMA Sparsh Saxena</div>
           <div class="prop-qual">ACMA, B.Com</div>
-          <div class="prop-badge"><b>Membership No.</b> 54596 &nbsp;|&nbsp; ICAI Reg. 006322</div>
+          <div class="prop-badge"><b>Membership No.</b> 54596 &nbsp;|&nbsp; ICMAI Reg. 006322</div>
           <div class="prop-links">
             <a href="tel:+918077901734" class="prop-link"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.9 10.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012.81 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.69a16 16 0 006.4 6.4l1.05-1.05a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span>+91 8077901734</span></a>
             <a href="tel:05732356605" class="prop-link"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.9 10.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012.81 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.69a16 16 0 006.4 6.4l1.05-1.05a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span>05732-356605</span></a>
@@ -719,24 +757,144 @@
         </div>
       </div>
     </div>
+
+    <!-- Team Members -->
+    <hr class="team-section-divider">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <div class="team-sub-heading">Our Associates &amp; Staff</div>
+        <p class="team-sub-desc">A multi-disciplinary team of legal and financial professionals committed to excellence.</p>
+      </div>
+
+      <!-- 1. Advocate Aastha Saxena -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">AS</span></div>
+          <div class="team-name">Aastha Saxena</div>
+          <div class="team-occ">Advocate</div>
+          <div class="team-expertise">Appeals &amp; Litigation under GST</div>
+          <p class="team-desc">A skilled legal professional specializing in GST litigation and appellate matters. She has extensive experience in handling complex disputes and representing clients before authorities, ensuring strong legal positioning and effective resolution strategies.</p>
+        </div>
+      </div>
+
+      <!-- 2. Advocate Stuti Saxena -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">SS</span></div>
+          <div class="team-name">Stuti Saxena</div>
+          <div class="team-occ">Advocate</div>
+          <div class="team-expertise">GST Compliances</div>
+          <p class="team-desc">An expert in GST compliance with a sharp eye for regulatory accuracy. She assists clients in maintaining seamless compliance, minimizing risks, and ensuring adherence to evolving GST laws.</p>
+        </div>
+      </div>
+
+      <!-- 3. Sarvagya Saxena -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">SX</span></div>
+          <div class="team-name">Sarvagya Saxena</div>
+          <div class="team-occ">Advocate</div>
+          <div class="team-expertise">NCLT &amp; NCLAT Expert</div>
+          <p class="team-desc">A dedicated advocate with specialization in NCLT and NCLAT matters. He provides strategic legal advisory in corporate disputes, insolvency cases, and tribunal proceedings with a strong analytical approach.</p>
+        </div>
+      </div>
+
+      <!-- 4. Sarthak Pithoriya -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">SP</span></div>
+          <div class="team-name">Sarthak Pithoriya</div>
+          <div class="team-occ">Semi Qualified Cost Accountant</div>
+          <div class="team-expertise">Accounting &amp; GST</div>
+          <p class="team-desc">A Semi-Qualified Cost Accountant with expertise in accounting and GST. He supports clients with financial structuring, compliance management, and accurate reporting to enhance operational efficiency.</p>
+        </div>
+      </div>
+
+      <!-- 5. Advocate Himani Sharma -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">HS</span></div>
+          <div class="team-name">Himani Sharma</div>
+          <div class="team-occ">Advocate</div>
+          <div class="team-expertise">Litigation Under GST</div>
+          <p class="team-desc">Focused on GST litigation, she brings strong legal acumen in handling disputes and departmental proceedings. She ensures effective representation and practical solutions for clients facing litigation challenges.</p>
+        </div>
+      </div>
+
+      <!-- 6. Khusboo Kashyap -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">KK</span></div>
+          <div class="team-name">Khusboo Kashyap</div>
+          <div class="team-occ">Accountant</div>
+          <div class="team-expertise">Accounting</div>
+          <p class="team-desc">An experienced accountant responsible for maintaining accurate financial records and ensuring smooth accounting operations. She plays a key role in supporting day-to-day financial management.</p>
+        </div>
+      </div>
+
+      <!-- 7. Manoj Kumar -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">MK</span></div>
+          <div class="team-name">Manoj Kumar</div>
+          <div class="team-occ">Office Manager</div>
+          <div class="team-expertise">Managing Staff &amp; Workflow</div>
+          <p class="team-desc">As Office Manager, he oversees internal operations, staff coordination, and workflow management. He ensures efficient functioning of the organization and smooth execution of daily activities.</p>
+        </div>
+      </div>
+
+      <!-- 8. Priyanka Jaiswal -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">PJ</span></div>
+          <div class="team-name">Priyanka Jaiswal</div>
+          <div class="team-occ">Consultant</div>
+          <div class="team-expertise">Accounting &amp; MCA Compliances</div>
+          <p class="team-desc">A consultant specializing in accounting and MCA compliances. She assists clients with regulatory filings, corporate compliance, and maintaining statutory records with precision.</p>
+        </div>
+      </div>
+
+      <!-- 9. Prince Singh -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">PS</span></div>
+          <div class="team-name">Prince Singh</div>
+          <div class="team-occ">Consultant</div>
+          <div class="team-expertise">Accounting &amp; GST Compliance</div>
+          <p class="team-desc">A consultant with expertise in accounting and GST compliance. He supports businesses in maintaining accurate records and ensuring timely compliance with GST regulations.</p>
+        </div>
+      </div>
+
+      <!-- 10. Advocate Rishab Chauhan -->
+      <div class="col-md-4 mb-4">
+        <div class="team-card">
+          <div class="team-initials-wrap"><span class="team-initials">RC</span></div>
+          <div class="team-name">Rishab Chauhan</div>
+          <div class="team-occ">Advocate</div>
+          <div class="team-expertise">Appeals under Income Tax</div>
+          <p class="team-desc">An advocate specializing in income tax appeals. He provides strategic representation in tax disputes and ensures strong advocacy before appellate authorities.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<!-- ========== REGULATORY UPDATES ========== 
+<!-- ========== REGULATORY UPDATES ========== -->
 <div class="reg-updates" id="updates">
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center mb-4">
         <div class="section-eyebrow" style="justify-content:center;margin-bottom:8px;">Stay Informed</div>
         <h2 style="font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--navy);">Latest Regulatory <em style="font-style:italic;color:var(--gold);">Updates</em></h2>
-        <p style="color:var(--textl);font-size:13px;margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;">AI-curated summaries of recent circulars, notifications &amp; amendments from Income Tax, GST, MCA, and ICAI portals</p>
+        <p style="color:var(--textl);font-size:13px;margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;">AI-curated summaries of recent circulars, notifications &amp; amendments from Income Tax, GST, MCA, and ICMAI portals</p>
       </div>
     </div>
     <div class="reg-tabs">
       <div class="reg-tab active" onclick="switchTab('it')" id="tab-it"><span class="tab-icon">📋</span>Income Tax</div>
       <div class="reg-tab" onclick="switchTab('gst')" id="tab-gst"><span class="tab-icon">🧾</span>GST</div>
       <div class="reg-tab" onclick="switchTab('mca')" id="tab-mca"><span class="tab-icon">🏢</span>Companies Act / MCA</div>
-      <div class="reg-tab" onclick="switchTab('icai')" id="tab-icai"><span class="tab-icon">📊</span>ICAI / Cost Audit</div>
+      <div class="reg-tab" onclick="switchTab('icai')" id="tab-icai"><span class="tab-icon">📊</span>ICMAI / Cost Audit</div>
     </div>
 
     <div class="reg-panel active" id="panel-it">
@@ -793,21 +951,21 @@
     <div class="reg-panel" id="panel-icai">
       <div class="updates-container">
         <div class="updates-header">
-          <h4>&#128202; ICAI / Cost Audit — Notifications, Guidelines &amp; CAS Updates</h4>
+          <h4>&#128202; ICMAI / Cost Audit — Notifications, Guidelines &amp; CAS Updates</h4>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <span class="src-badge">icmai.in</span>
             <button class="refresh-btn" onclick="loadUpdates('icai')"><i class="fa fa-refresh"></i> Refresh</button>
           </div>
         </div>
-        <div id="updates-icai"><div class="updates-loading"><div class="spinner"></div>Fetching latest ICAI / Cost Audit updates...</div></div>
+        <div id="updates-icai"><div class="updates-loading"><div class="spinner"></div>Fetching latest ICMAI / Cost Audit updates...</div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:12px;">
         <a href="https://icmai.in/icmai/Notifications.php" target="_blank" class="reg-cta">View all on icmai.in <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
-        <p class="reg-note">&#9432; AI-summarised. Always verify on the official ICAI portal.</p>
+        <p class="reg-note">&#9432; AI-summarised. Always verify on the official ICMAI portal.</p>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <!-- Testimonials -->
 <div class="testimonials">
@@ -1016,12 +1174,12 @@
 </div>          <div><div class="brand-name" style="color:#fff;">Sparsh Saxena &amp; Co.</div><div class="brand-tag">Cost Accountants</div></div>
         </div>
         <p>A proprietorship firm of Cost &amp; Management Accountants providing expert financial and compliance services across India since 2023.</p>
-        <div class="footer-icai-badge"><b>ICAI Reg. No. 006322</b> &nbsp;|&nbsp; Membership No. 54596</div>
+        <div class="footer-icai-badge"><b>ICMAI Reg. No. 006322</b> &nbsp;|&nbsp; Membership No. 54596</div>
         <ul class="social-icons"><li><a href="#"><i class="fa fa-linkedin"></i></a></li><li><a href="#"><i class="fa fa-instagram"></i></a></li>><li><a href="https://www.facebook.com/share/1G3BJ7ghVx/?mibextid=wwXIfr"><i class="fa fa-facebook"></i></a></li><li><a href="https://wa.me/918077901734"><i class="fa fa-whatsapp"></i></a></li></ul>
       </div>
       <div class="col-md-2 footer-item">
         <h4>Quick Links</h4>
-        <ul class="menu-list"><li><a href="#about">About the Firm</a></li><li><a href="#services">Our Services</a></li><li><a href="#proprietor">CMA Profile</a></li><li><a href="#updates">Reg. Updates</a></li><li><a href="#contact">Contact Us</a></li></ul>
+        <ul class="menu-list"><li><a href="#about">About the Firm</a></li><li><a href="#services">Our Services</a></li><li><a href="#proprietor">Our Team</a></li><li><a href="#updates">Reg. Updates</a></li><li><a href="#contact">Contact Us</a></li></ul>
       </div>
       <div class="col-md-3 footer-item">
         <h4>Our Services</h4>
@@ -1037,7 +1195,7 @@
 </footer>
 <div class="sub-footer">
   <div class="container">
-    <p>Copyright &copy; 2024 Sparsh Saxena &amp; Co. &nbsp;|&nbsp; Cost &amp; Management Accountants &nbsp;|&nbsp; ICAI Reg. No. 006322 &nbsp;|&nbsp; All Rights Reserved</p>
+    <p>Copyright &copy; 2024 Sparsh Saxena &amp; Co. &nbsp;|&nbsp; Cost &amp; Management Accountants &nbsp;|&nbsp; ICMAI Reg. No. 006322 &nbsp;|&nbsp; All Rights Reserved</p>
   </div>
 </div>
 
@@ -1075,68 +1233,308 @@
       nav: false, dots: true,
       responsive: { 0:{ items:1 }, 768:{ items:2 } }
     });
-});
 
-   // --- Tab switching ---
-  function switchTab(tab) {
-    document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.reg-pane').forEach(p => p.classList.remove('active'));
-    const tabEl = document.getElementById('tab-' + tab);
-    const panelEl = document.getElementById('panel-' + tab);
-    if (tabEl) tabEl.classList.add('active');
-    if (panelEl) panelEl.classList.add('active');
-  } // <--- MAKE SURE THIS BRACE EXISTS
+    // Load first tab
+    loadUpdates('it');
+  });
 
-  // --- EmailJS ---
-  (function() {
-    // Check for correct spelling: 'emailjs' (not emailis)
-    if (window.emailjs) {
-      emailjs.init({
-        publicKey: "lj8DC8r9Lcw_qPFTp", // Case-sensitive! Double check this in your dashboard.
+  // Tab switching
+  function switchTab(tab){
+    document.querySelectorAll('.reg-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.reg-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('tab-'+tab).classList.add('active');
+    document.getElementById('panel-'+tab).classList.add('active');
+    var container = document.getElementById('updates-'+tab);
+    if(container.querySelector('.updates-loading')){ loadUpdates(tab); }
+  }
+
+  // AI regulatory updates via Anthropic API
+  async function loadUpdates(tab){
+    var container = document.getElementById('updates-'+tab);
+    var btn = document.querySelector('#panel-'+tab+' .refresh-btn');
+    if(btn){ btn.disabled = true; btn.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Loading'; }
+    container.innerHTML = '<div class="updates-loading"><div class="spinner"></div>Fetching latest updates from AI...</div>';
+
+    var prompts = {
+      it: 'List 6 important recent Income Tax updates in India (2024–2025): circulars, notifications, amendments, or deadline changes. For each provide: date (month/year), title, one-sentence description of what changed, and type (Circular/Notification/Amendment/Deadline). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation, no code fences.',
+      gst: 'List 6 important recent GST India updates (2024–2025): circulars, notifications, rate changes, or compliance changes. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Rate Change/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
+      mca: 'List 6 important recent Companies Act / MCA India updates (2024–2025): amendments, notifications, or compliance deadlines. For each: date (month/year), title, one-sentence description, type (Notification/Amendment/Circular/Compliance). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
+      icai: 'List 6 important recent ICMAI (Institute of Cost Accountants of India) updates (2024–2025): cost audit rules, CAS updates, threshold changes, circulars. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Guideline/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.'
+    };
+
+    var badgeMap = { it:'badge-it', gst:'badge-gst', mca:'badge-mca', icai:'badge-icai' };
+
+    try {
+      var resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompts[tab] }]
+        })
       });
+      var data = await resp.json();
+      var raw = (data.content||[]).map(function(b){ return b.text||''; }).join('');
+      raw = raw.replace(/```json|```/g,'').trim();
+      // extract JSON array
+      var match = raw.match(/\[[\s\S]*\]/);
+      if(!match) throw new Error('No JSON array found');
+      var items = JSON.parse(match[0]);
+      var html = '';
+      items.forEach(function(item){
+        html += '<div class="update-item">'
+          + '<div class="u-date">'+escHtml(item.date||'')+'</div>'
+          + '<div class="u-title">'+escHtml(item.title||'')+'</div>'
+          + '<div class="u-desc">'+escHtml(item.desc||'')+'</div>'
+          + '<span class="u-badge '+badgeMap[tab]+'">'+escHtml(item.type||'')+'</span>'
+          + '</div>';
+      });
+      container.innerHTML = html;
+    } catch(e) {
+      container.innerHTML = '<div class="update-item"><div class="u-title" style="color:var(--textl);padding:8px 0;">Could not load updates automatically.</div><div class="u-desc">Please visit the official portal directly using the link below for the latest regulatory updates and notifications.</div></div>';
     }
+    if(btn){ btn.disabled = false; btn.innerHTML = '<i class="fa fa-refresh"></i> Refresh'; }
+  }
+
+  function escHtml(s){ var d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+</script>
+
+<script type="text/javascript">
+  (function() {
+    // Initialize with your Public Key
+    emailjs.init("YOUR_PUBLIC_KEY");
   })();
 
- window.onload = function() {
-  // 1. Hide Loader
-  const loader = document.querySelector('.loader') || document.getElementById('loader');
-  if (loader) { loader.style.display = 'none'; }
-
-  // 2. Setup the form
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(event) {
+  window.onload = function() {
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault();
       
       const btn = event.target.querySelector('button');
-      const originalText = btn.innerText;
+      btn.innerText = 'Sending...';
 
-      // CHECK AND INIT: This ensures it initializes even if it loaded late
-      if (typeof emailjs !== 'undefined') {
-        emailjs.init({ publicKey: "lj8DC8r9Lcw_qPFTp" });
-        
-        btn.innerText = 'Sending...';
-        btn.disabled = true;
-
-        emailjs.sendForm('service_qbuqugf', 'template_o2nqnjk', this)
-          .then(function() {
-            alert('Message Sent Successfully!');
-            btn.innerText = originalText;
-            btn.disabled = false;
-            contactForm.reset();
-          }, function(error) {
-            alert('Error: ' + JSON.stringify(error));
-            btn.innerText = originalText;
-            btn.disabled = false;
-          });
-      } else {
-        alert("The email service is still loading due to slow network. Please wait 5 seconds and try again.");
-      }
+      // These IDs come from your EmailJS Dashboard
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        .then(function() {
+          alert('Message Sent Successfully!');
+          btn.innerText = 'SEND MESSAGE';
+          document.getElementById('contact-form').reset();
+        }, function(error) {
+          alert('Failed to send message. Please try again.');
+          console.log('FAILED...', error);
+          btn.innerText = 'SEND MESSAGE';
+        });
     });
   }
-};
-
-
 </script>
+<!-- Service Detail Modal -->
+<div class="svc-modal-overlay" id="svcModalOverlay" onclick="closeSvcModal(event)">
+  <div class="svc-modal" id="svcModal" role="dialog" aria-modal="true" aria-labelledby="svcModalTitle" aria-describedby="svcModalOverview" tabindex="-1">
+    <div class="svc-modal-header">
+      <button class="svc-modal-close" onclick="closeSvcModalDirect()" aria-label="Close">&times;</button>
+      <div class="modal-icon" id="svcModalIcon"></div>
+      <h3 id="svcModalTitle"></h3>
+      <span class="svc-modal-tag" id="svcModalTag"></span>
+    </div>
+    <div class="svc-modal-body">
+      <p class="modal-overview" id="svcModalOverview"></p>
+      <h5>Key Offerings</h5>
+      <ul class="modal-list" id="svcModalList"></ul>
+    </div>
+    <div class="svc-modal-footer">
+      <a href="#contact" class="filled-button" onclick="closeSvcModalDirect()">Get a Free Consultation</a>
+      <button class="border-button" style="color:var(--navy);border-color:var(--navy);" onclick="closeSvcModalDirect()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var svcData = {
+    'cost-audit': {
+      title: 'Cost Audit &amp; Stock Audit',
+      tag: 'Core Speciality',
+      icon: '<svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>',
+      overview: 'We specialize in statutory cost audits mandated under the Companies (Cost Records and Audit) Rules, 2014. Our meticulous approach ensures full compliance with Cost Accounting Standards (CAS) while providing actionable insights to help optimize your cost structures and improve operational efficiency.',
+      offerings: [
+        'Statutory Cost Audit under the Companies Act, 2013 (Form CRA-3 & CRA-4)',
+        'Maintenance and compilation of Cost Records (Form CRA-1)',
+        'Physical Stock Verification and Stock Audit assignments',
+        'Certification under Cost Accounting Standards (CAS 1–24)',
+        'Cost efficiency analysis and cost reduction recommendations',
+        'Internal cost audits, periodic cost reviews, and variance analysis',
+        'Transfer pricing support from a cost accounting perspective'
+      ]
+    },
+    'gst': {
+      title: 'GST Registration &amp; Filing',
+      tag: 'Indirect Tax',
+      icon: '<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+      overview: 'We offer end-to-end GST compliance solutions — from initial registration to periodic return filings, reconciliation, and proactive advisory — ensuring your business remains fully compliant with the Goods and Services Tax framework and avoids penalties.',
+      offerings: [
+        'New GST Registration (Regular, Composition, Casual Taxable Person)',
+        'Monthly / Quarterly return filing (GSTR-1, GSTR-3B, GSTR-9, GSTR-9C)',
+        'Input Tax Credit (ITC) reconciliation and utilization advisory',
+        'GST Annual Return and Reconciliation Statement certification',
+        'Handling GST notices, scrutiny, and department appeals',
+        'E-Way Bill and e-Invoicing compliance setup and management',
+        'GST refund applications and tracking (exports, inverted duty, etc.)'
+      ]
+    },
+    'income-tax': {
+      title: 'Income Tax &amp; TDS Filing',
+      tag: 'Direct Tax',
+      icon: '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+      overview: 'We provide comprehensive direct tax services covering income tax return filings for all categories of assessees, TDS compliance management, representation before tax authorities, and proactive tax planning strategies designed to minimize your tax liability within the bounds of the law.',
+      offerings: [
+        'E-filing of Income Tax Returns (ITR 1–7) for individuals, firms, LLPs, and companies',
+        'TDS return filing (Form 24Q, 26Q, 27Q, 27EQ) and challan management',
+        'TDS reconciliation and mismatch resolution via Form 26AS / AIS',
+        'Representation in scrutiny assessments and income tax proceedings',
+        'Tax planning, optimization, and restructuring strategies',
+        'Lower / NIL TDS deduction certificate applications (Form 13)',
+        'Advance tax computation, planning, and payment advisory'
+      ]
+    },
+    'company-roc': {
+      title: 'Company Incorporation &amp; ROC',
+      tag: 'Corporate Law',
+      icon: '<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>',
+      overview: 'From choosing the right business structure to navigating post-incorporation compliance requirements, we guide you through every step of setting up and maintaining a legally compliant entity under the Companies Act, 2013 and other applicable laws.',
+      offerings: [
+        'Private / Public Limited Company and OPC incorporation',
+        'LLP and General Partnership Firm formation',
+        'MCA / ROC annual filings and compliance calendar management',
+        'Director KYC (DIR-3 KYC), DIN allotment, and DSC procurement',
+        'Foreign company, liaison office, and branch office registration',
+        'MSME / UDYAM, Startup India, and FSSAI registrations',
+        'Secretarial assignments, board meeting documentation, and minutes'
+      ]
+    },
+    'cma-data': {
+      title: 'CMA Data &amp; Project Reports',
+      tag: 'Finance Advisory',
+      icon: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      overview: 'We prepare comprehensive CMA (Credit Monitoring Arrangement) data and detailed project reports that meet the standards of leading banks and financial institutions, supporting your loan sanctions, working capital assessments, and investment approval processes.',
+      offerings: [
+        'CMA data preparation for working capital and term loan assessments',
+        'Detailed Project Reports (DPR) for new projects and expansions',
+        'OD / CC limit justification, renewal, and enhancement support',
+        'Financial projections, sensitivity analysis, and cash flow statements',
+        'Bank-specific report formats (SBI, PNB, HDFC, Canara, etc.)',
+        'Investment and subsidy proposal reports for SIDBI and government schemes',
+        'Pre-sanction documentation and post-sanction compliance support'
+      ]
+    },
+    'esic-epfo': {
+      title: 'ESIC &amp; EPFO Compliance',
+      tag: 'HR Compliance',
+      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
+      overview: 'We handle all your labour law compliance obligations under ESIC and EPFO regulations, ensuring timely registrations, accurate return filings, and seamless employee benefit administration so you can focus entirely on your core business.',
+      offerings: [
+        'ESIC and EPFO registrations for new and existing establishments',
+        'Monthly ECR (Electronic Challan cum Return) filing and challan payments',
+        'ESIC half-yearly returns and accident / injury claim support',
+        'Employee enrolment, UAN generation, and KYC management',
+        'Payroll reconciliation with statutory deductions (PF, ESI, PT)',
+        'Contractual and outsourced workforce payroll compliance management',
+        'Representation in ESIC / EPFO inspections, audits, and notices'
+      ]
+    },
+    'mgmt-consulting': {
+      title: 'Management Consulting',
+      tag: 'Strategic Advisory',
+      icon: '<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+      overview: 'Our strategic management consulting services help businesses navigate complex operational and financial challenges — from project feasibility studies and turnaround strategies to M&A due diligence and enterprise-wide risk management frameworks.',
+      offerings: [
+        'Project feasibility studies, appraisals, and viability assessments',
+        'Business rehabilitation, restructuring, and turnaround strategies',
+        'Financial and operational due diligence for M&amp;A transactions',
+        'Enterprise Risk Management (ERM) framework design and implementation',
+        'Performance benchmarking, KPI design, and cost optimization',
+        'Business process review, internal controls, and SOPs',
+        'Strategic financial modelling and long-range planning'
+      ]
+    },
+    'insolvency': {
+      title: 'Insolvency &amp; IBC Matters',
+      tag: 'IBC Specialist',
+      icon: '<svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="2"/></svg>',
+      overview: 'Leveraging deep expertise in the Insolvency and Bankruptcy Code, 2016, we assist resolution professionals, creditors, committees of creditors, and corporates through every phase of the Corporate Insolvency Resolution Process (CIRP) and liquidation proceedings.',
+      offerings: [
+        'Corporate Insolvency Resolution Process (CIRP) support and coordination',
+        'Information Memorandum (IM) preparation and financial analysis',
+        'Liquidation process support and voluntary winding-up assignments',
+        'Claims verification, collation, and creditor register management',
+        'Interim Resolution Professional (IRP) and RP support functions',
+        'Financial and operational due diligence for resolution applicants',
+        'IBC compliance advisory, filing support, and NCLT documentation'
+      ]
+    },
+    'personal-finance': {
+      title: 'Personal Financial Advisory',
+      tag: 'Personal Finance',
+      icon: '<svg viewBox="0 0 24 24"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/></svg>',
+      overview: 'We provide tailored personal finance solutions — combining tax efficiency, smart investment guidance, and certification services — to help individuals, professionals, and business owners achieve their financial goals with confidence and clarity.',
+      offerings: [
+        'Personal income tax planning, optimization, and return filing',
+        'Investment portfolio structuring, review, and advisory',
+        'Net worth certificates for visa, loan, and regulatory purposes',
+        'Turnover and income certifications for tenders and contracts',
+        'HUF (Hindu Undivided Family) formation and tax planning',
+        'Capital gains computation, tax harvesting, and planning strategies',
+        'Succession planning, estate structuring, and Will advisory'
+      ]
+    }
+  };
+
+  var _svcLastFocus = null;
+
+  function openSvcModal(key) {
+    var d = svcData[key];
+    if (!d) return;
+    document.getElementById('svcModalIcon').innerHTML = d.icon;
+    document.getElementById('svcModalTitle').innerHTML = d.title;
+    document.getElementById('svcModalTag').textContent = d.tag;
+    document.getElementById('svcModalOverview').textContent = d.overview;
+    /* offerings are static hardcoded strings — innerHTML is intentional for entity rendering */
+    var li = d.offerings.map(function(o){ return '<li>' + o + '</li>'; }).join('');
+    document.getElementById('svcModalList').innerHTML = li;
+    _svcLastFocus = document.activeElement;
+    document.getElementById('svcModalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('svcModal').focus();
+  }
+
+  function closeSvcModal(e) {
+    if (e.target === document.getElementById('svcModalOverlay')) {
+      closeSvcModalDirect();
+    }
+  }
+
+  function closeSvcModalDirect() {
+    document.getElementById('svcModalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    if (_svcLastFocus) { _svcLastFocus.focus(); _svcLastFocus = null; }
+  }
+
+  /* Basic focus trap: keep Tab/Shift+Tab within the modal */
+  document.getElementById('svcModal').addEventListener('keydown', function(e) {
+    if (e.key !== 'Tab') return;
+    var focusable = this.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('svcModalOverlay').classList.contains('active')) {
+      closeSvcModalDirect();
+    }
+  });
+</script>
+
 </body>
 </html>
