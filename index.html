@@ -486,7 +486,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a class="nav-link" href="#top">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="#proprietor">Our Team</a></li>
@@ -909,14 +909,14 @@
       <div class="col-md-12 text-center mb-4">
         <div class="section-eyebrow" style="justify-content:center;margin-bottom:8px;">Stay Informed</div>
         <h2 style="font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--navy);">Latest Regulatory <em style="font-style:italic;color:var(--gold);">Updates</em></h2>
-        <p style="color:var(--textl);font-size:13px;margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;">AI-curated summaries of recent circulars, notifications &amp; amendments from Income Tax, GST, MCA, and ICAI portals</p>
+        <p style="color:var(--textl);font-size:13px;margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;">AI-curated summaries of recent circulars, notifications &amp; amendments from Income Tax, GST, MCA, and ICMAI portals</p>
       </div>
     </div>
     <div class="reg-tabs">
       <div class="reg-tab active" onclick="switchTab('it')" id="tab-it"><span class="tab-icon">📋</span>Income Tax</div>
       <div class="reg-tab" onclick="switchTab('gst')" id="tab-gst"><span class="tab-icon">🧾</span>GST</div>
       <div class="reg-tab" onclick="switchTab('mca')" id="tab-mca"><span class="tab-icon">🏢</span>Companies Act / MCA</div>
-      <div class="reg-tab" onclick="switchTab('icai')" id="tab-icai"><span class="tab-icon">📊</span>ICAI / Cost Audit</div>
+      <div class="reg-tab" onclick="switchTab('icai')" id="tab-icai"><span class="tab-icon">📊</span>ICMAI / Cost Audit</div>
     </div>
 
     <div class="reg-panel active" id="panel-it">
@@ -973,17 +973,17 @@
     <div class="reg-panel" id="panel-icai">
       <div class="updates-container">
         <div class="updates-header">
-          <h4>&#128202; ICAI / Cost Audit — Notifications, Guidelines &amp; CAS Updates</h4>
+          <h4>&#128202; ICMAI / Cost Audit — Notifications, Guidelines &amp; CAS Updates</h4>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <span class="src-badge">icmai.in</span>
             <button class="refresh-btn" onclick="loadUpdates('icai')"><i class="fa fa-refresh"></i> Refresh</button>
           </div>
         </div>
-        <div id="updates-icai"><div class="updates-loading"><div class="spinner"></div>Fetching latest ICAI / Cost Audit updates...</div></div>
+        <div id="updates-icai"><div class="updates-loading"><div class="spinner"></div>Fetching latest ICMAI / Cost Audit updates...</div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:12px;">
         <a href="https://icmai.in/icmai/Notifications.php" target="_blank" class="reg-cta">View all on icmai.in <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
-        <p class="reg-note">&#9432; AI-summarised. Always verify on the official ICAI portal.</p>
+        <p class="reg-note">&#9432; AI-summarised. Always verify on the official ICMAI portal.</p>
       </div>
     </div>
   </div>
@@ -1339,6 +1339,19 @@
   // Sticky header
   $(window).scroll(function(){ $('header').toggleClass('background-header', $(this).scrollTop() > 80); });
 
+  // Active nav highlight on scroll
+  $(window).scroll(function(){
+    var scrollPos = $(this).scrollTop() + 80;
+    var sections = ['top','about','services','proprietor','updates','blogs','contact'];
+    var active = 'top';
+    for(var i = sections.length - 1; i >= 0; i--){
+      var el = document.getElementById(sections[i]);
+      if(el && el.offsetTop <= scrollPos){ active = sections[i]; break; }
+    }
+    $('.navbar-nav .nav-item').removeClass('active');
+    $('.navbar-nav .nav-item a[href="#' + active + '"]').closest('.nav-item').addClass('active');
+  }).scroll();
+
   $(document).ready(function(){
     // Hero Slider — using slick
     $('.hero-slider').slick({
@@ -1386,7 +1399,7 @@
       it: 'List 6 important recent Income Tax updates in India (2024–2025): circulars, notifications, amendments, or deadline changes. For each provide: date (month/year), title, one-sentence description of what changed, and type (Circular/Notification/Amendment/Deadline). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation, no code fences.',
       gst: 'List 6 important recent GST India updates (2024–2025): circulars, notifications, rate changes, or compliance changes. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Rate Change/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
       mca: 'List 6 important recent Companies Act / MCA India updates (2024–2025): amendments, notifications, or compliance deadlines. For each: date (month/year), title, one-sentence description, type (Notification/Amendment/Circular/Compliance). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.',
-      icai: 'List 6 important recent ICAI (Institute of Cost Accountants of India) updates (2024–2025): cost audit rules, CAS updates, threshold changes, circulars. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Guideline/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.'
+      icai: 'List 6 important recent ICMAI (Institute of Cost Accountants of India) updates (2024–2025): cost audit rules, CAS updates, threshold changes, circulars. For each: date (month/year), title, one-sentence description, type (Circular/Notification/Guideline/Amendment). Return ONLY a valid JSON array: [{"date":"...","title":"...","desc":"...","type":"..."}]. No markdown, no explanation.'
     };
 
     var badgeMap = { it:'badge-it', gst:'badge-gst', mca:'badge-mca', icai:'badge-icai' };
