@@ -14,8 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
-
   <style>
     :root{--navy:#0b1d3a;--navy2:#132848;--gold:#c49a2a;--gold2:#e0b84a;--light:#f7f9fc;--border:#e4e8f0;--text:#3d4d66;--textl:#7a8ba6;}
     *{box-sizing:border-box;}
@@ -330,6 +328,9 @@
     .contact-form textarea{resize:vertical;min-height:105px;}
     .submit-btn{background:var(--navy);color:#fff;border:none;padding:12px 26px;border-radius:7px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;width:100%;box-shadow:0 4px 12px rgba(11,29,58,.2);transition:all .25s;}
     .submit-btn:hover{background:var(--gold);transform:translateY(-1px);}
+    .form-feedback{margin-top:12px;padding:12px 16px;border-radius:7px;font-size:13px;font-weight:600;line-height:1.5;}
+    .form-feedback-success{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;}
+    .form-feedback-error{background:#fce4ec;color:#c62828;border:1px solid #ef9a9a;}
 
     /* FOOTER */
     footer{background:var(--navy);padding:68px 0 0;}
@@ -1274,6 +1275,9 @@
         </div>
         <div class="col-md-12"><fieldset><textarea name="message" rows="4" placeholder="Briefly describe your requirement..."></textarea></fieldset></div>
         <div class="col-md-12"><fieldset><button type="submit" class="submit-btn">SEND MESSAGE</button></fieldset></div>
+        <div class="col-md-12">
+          <div id="form-feedback" style="display:none;"></div>
+        </div>
       </div>
     </form>
     
@@ -1447,32 +1451,62 @@
   document.addEventListener('DOMContentLoaded', function(){ loadUpdates('it'); });
 </script>
 
-<script type="text/javascript">
-  (function() {
-    // Initialize with your Public Key
-    emailjs.init("YOUR_PUBLIC_KEY");
-  })();
+<script>
+  // Contact Form — FormSubmit AJAX (no backend required)
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('.submit-btn');
+    var feedback = document.getElementById('form-feedback');
 
-  window.onload = function() {
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      const btn = event.target.querySelector('button');
-      btn.innerText = 'Sending...';
+    var name    = (form.elements['from_name'].value     || '').trim();
+    var email   = (form.elements['reply_to'].value      || '').trim();
+    var phone   = (form.elements['phone_number'].value  || '').trim();
+    var service = (form.elements['service_required'].value || '').trim();
+    var message = (form.elements['message'].value       || '').trim();
 
-      // These IDs come from your EmailJS Dashboard
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
-        .then(function() {
-          alert('Message Sent Successfully!');
-          btn.innerText = 'SEND MESSAGE';
-          document.getElementById('contact-form').reset();
-        }, function(error) {
-          alert('Failed to send message. Please try again.');
-          console.log('FAILED...', error);
-          btn.innerText = 'SEND MESSAGE';
-        });
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    feedback.style.display = 'none';
+    feedback.className = '';
+
+    fetch('https://formsubmit.co/ajax/cmasparshsaxena@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        service: service,
+        message: message,
+        _subject: 'New Website Inquiry from ' + name + ' — Sparsh Saxena & Co.',
+        _template: 'table',
+        _captcha: 'false',
+        _autoresponse: 'Thank you for contacting Sparsh Saxena & Co. We have received your inquiry and will get back to you within one business day. — CMA Sparsh Saxena'
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      /* FormSubmit AJAX returns { "success": "true", ... } (string, not boolean) */
+      if (data.success === 'true' || data.success === true) {
+        feedback.className = 'form-feedback form-feedback-success';
+        feedback.style.display = 'block';
+        feedback.textContent = '✓ Thank you! Your message has been sent successfully. We will get back to you within one business day.';
+        form.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    })
+    .catch(function() {
+      feedback.className = 'form-feedback form-feedback-error';
+      feedback.style.display = 'block';
+      feedback.textContent = '✗ Failed to send message. Please try again or reach us directly at cmasparshsaxena@gmail.com';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'SEND MESSAGE';
     });
-  }
+  });
 </script>
 <!-- Service Detail Modal -->
 <div class="svc-modal-overlay" id="svcModalOverlay" onclick="closeSvcModal(event)">
