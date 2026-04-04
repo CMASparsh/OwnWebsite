@@ -1498,31 +1498,103 @@
     formData.append('_autoresponse',    'Thank you for contacting Sparsh Saxena & Co. We have received your inquiry and will get back to you within one business day. — CMA Sparsh Saxena');
     var eHtml = escHtml;
     formData.append('_html',
-      '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;font-family:Arial,sans-serif;background:#f4f6f9;">' +
-      '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;padding:32px 0;">' +
+      '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>New Inquiry — Sparsh Saxena &amp; Co.</title></head>' +
+      '<body style="margin:0;padding:0;background:#edf1f7;font-family:Arial,sans-serif;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0" style="background:#edf1f7;padding:48px 0;">' +
       '<tr><td align="center">' +
-      '<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">' +
-      '<tr><td style="background:#0b1d3a;padding:28px 36px;">' +
-      '<h2 style="margin:0;color:#c49a2a;font-size:20px;letter-spacing:0.5px;">Sparsh Saxena &amp; Co.</h2>' +
-      '<p style="margin:6px 0 0;color:#a0b0c8;font-size:13px;">New Website Inquiry</p>' +
-      '</td></tr>' +
-      '<tr><td style="padding:32px 36px;">' +
+      '<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 6px 28px rgba(11,29,58,0.13);">' +
+
+      /* ── HEADER ── */
+      '<tr><td style="background:#0b1d3a;padding:0;">' +
       '<table width="100%" cellpadding="0" cellspacing="0">' +
-      '<tr><td style="padding:10px 0;border-bottom:1px solid #eef0f4;width:38%;font-size:13px;color:#6b7a8d;font-weight:600;vertical-align:top;">Full Name</td>' +
-      '<td style="padding:10px 0 10px 16px;border-bottom:1px solid #eef0f4;font-size:14px;color:#1a2a3a;vertical-align:top;">' + eHtml(name) + '</td></tr>' +
-      '<tr><td style="padding:10px 0;border-bottom:1px solid #eef0f4;font-size:13px;color:#6b7a8d;font-weight:600;vertical-align:top;">Phone</td>' +
-      '<td style="padding:10px 0 10px 16px;border-bottom:1px solid #eef0f4;font-size:14px;color:#1a2a3a;vertical-align:top;">' + eHtml(phone) + '</td></tr>' +
-      '<tr><td style="padding:10px 0;border-bottom:1px solid #eef0f4;font-size:13px;color:#6b7a8d;font-weight:600;vertical-align:top;">Email</td>' +
-      '<td style="padding:10px 0 10px 16px;border-bottom:1px solid #eef0f4;font-size:14px;color:#1a2a3a;vertical-align:top;">' + eHtml(email) + '</td></tr>' +
-      '<tr><td style="padding:10px 0;border-bottom:1px solid #eef0f4;font-size:13px;color:#6b7a8d;font-weight:600;vertical-align:top;">Service Required</td>' +
-      '<td style="padding:10px 0 10px 16px;border-bottom:1px solid #eef0f4;font-size:14px;color:#1a2a3a;vertical-align:top;">' + eHtml(service || '—') + '</td></tr>' +
-      '<tr><td style="padding:14px 0 0;font-size:13px;color:#6b7a8d;font-weight:600;vertical-align:top;">Message</td>' +
-      '<td style="padding:14px 0 0 16px;font-size:14px;color:#1a2a3a;line-height:1.6;vertical-align:top;">' + eHtml(message).replace(/\n/g, '<br>') + '</td></tr>' +
+      '<tr><td style="padding:34px 40px 0;">' +
+      '<p style="margin:0 0 6px;color:#c49a2a;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;">Cost &amp; Management Accountants</p>' +
+      '<h1 style="margin:0 0 5px;color:#ffffff;font-size:26px;font-weight:700;letter-spacing:0.4px;">Sparsh Saxena <span style="color:#c49a2a;">&amp;</span> Co.</h1>' +
+      '<p style="margin:0;color:#8aaac8;font-size:13px;">New Website Inquiry Received</p>' +
+      '</td></tr>' +
+      '<tr><td style="padding:18px 40px 0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:#c49a2a;height:3px;border-radius:2px;"></td></tr></table>' +
+      '</td></tr>' +
+      '<tr><td style="padding:14px 40px 30px;">' +
+      '<span style="display:inline-block;background:rgba(196,154,42,0.15);color:#c49a2a;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;border:1px solid rgba(196,154,42,0.40);">Action Required</span>' +
+      '</td></tr>' +
       '</table>' +
       '</td></tr>' +
-      '<tr><td style="background:#f4f6f9;padding:18px 36px;text-align:center;">' +
-      '<p style="margin:0;font-size:11px;color:#9aaabb;">This message was submitted via the contact form on sparshsaxena.com</p>' +
+
+      /* ── BODY ── */
+      '<tr><td style="padding:36px 40px 30px;">' +
+      '<p style="margin:0 0 26px;font-size:14px;color:#3d4d66;line-height:1.7;">A new inquiry has been submitted through your website contact form. Please review the details below and follow up at your earliest convenience.</p>' +
+
+      '<table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">' +
+
+      /* Full Name */
+      '<tr><td style="border-top:1px solid #e4e8f0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="width:36%;padding:14px 12px 14px 0;vertical-align:top;"><span style="font-size:10px;font-weight:700;color:#0b1d3a;text-transform:uppercase;letter-spacing:1px;">Full Name</span></td>' +
+      '<td style="padding:14px 0 14px 18px;vertical-align:top;border-left:3px solid #c49a2a;"><span style="font-size:14px;color:#1a2a3a;font-weight:600;">' + eHtml(name) + '</span></td>' +
+      '</tr></table>' +
       '</td></tr>' +
+
+      /* Phone */
+      '<tr><td style="border-top:1px solid #e4e8f0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="width:36%;padding:14px 12px 14px 0;vertical-align:top;"><span style="font-size:10px;font-weight:700;color:#0b1d3a;text-transform:uppercase;letter-spacing:1px;">Phone</span></td>' +
+      '<td style="padding:14px 0 14px 18px;vertical-align:top;border-left:3px solid #c49a2a;"><span style="font-size:14px;color:#1a2a3a;font-weight:500;">' + eHtml(phone) + '</span></td>' +
+      '</tr></table>' +
+      '</td></tr>' +
+
+      /* Email */
+      '<tr><td style="border-top:1px solid #e4e8f0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="width:36%;padding:14px 12px 14px 0;vertical-align:top;"><span style="font-size:10px;font-weight:700;color:#0b1d3a;text-transform:uppercase;letter-spacing:1px;">Email</span></td>' +
+      '<td style="padding:14px 0 14px 18px;vertical-align:top;border-left:3px solid #c49a2a;"><a href="mailto:' + eHtml(email) + '" style="font-size:14px;color:#c49a2a;font-weight:500;text-decoration:none;">' + eHtml(email) + '</a></td>' +
+      '</tr></table>' +
+      '</td></tr>' +
+
+      /* Service Required */
+      '<tr><td style="border-top:1px solid #e4e8f0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="width:36%;padding:14px 12px 14px 0;vertical-align:top;"><span style="font-size:10px;font-weight:700;color:#0b1d3a;text-transform:uppercase;letter-spacing:1px;">Service Required</span></td>' +
+      '<td style="padding:14px 0 14px 18px;vertical-align:top;border-left:3px solid #c49a2a;"><span style="font-size:14px;color:#1a2a3a;font-weight:500;">' + eHtml(service || '—') + '</span></td>' +
+      '</tr></table>' +
+      '</td></tr>' +
+
+      /* Message */
+      '<tr><td style="border-top:1px solid #e4e8f0;border-bottom:1px solid #e4e8f0;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="width:36%;padding:14px 12px 14px 0;vertical-align:top;"><span style="font-size:10px;font-weight:700;color:#0b1d3a;text-transform:uppercase;letter-spacing:1px;">Message</span></td>' +
+      '<td style="padding:14px 0 14px 18px;vertical-align:top;border-left:3px solid #c49a2a;"><span style="font-size:14px;color:#1a2a3a;line-height:1.75;">' + eHtml(message).replace(/\n/g, '<br>') + '</span></td>' +
+      '</tr></table>' +
+      '</td></tr>' +
+
+      '</table>' +
+
+      /* CTA button */
+      '<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:30px;"><tr><td>' +
+      '<a href="mailto:' + eHtml(email) + '" style="display:inline-block;background:#0b1d3a;color:#c49a2a;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;padding:13px 32px;border-radius:30px;text-decoration:none;">Reply to Client</a>' +
+      '</td></tr></table>' +
+
+      '</td></tr>' +
+
+      /* ── FOOTER ── */
+      '<tr><td style="background:#0b1d3a;padding:26px 40px;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0">' +
+      '<tr>' +
+      '<td style="vertical-align:top;padding-right:16px;">' +
+      '<p style="margin:0 0 5px;color:#c49a2a;font-size:12px;font-weight:700;letter-spacing:0.5px;">Sparsh Saxena &amp; Co.</p>' +
+      '<p style="margin:0;color:#6e8fad;font-size:11px;line-height:1.7;">19/2, Gyanlok Colony, DM Road<br>Bulandshahr, UP 203001</p>' +
+      '</td>' +
+      '<td style="vertical-align:top;text-align:right;">' +
+      '<p style="margin:0 0 3px;color:#6e8fad;font-size:11px;">+91 8077901734</p>' +
+      '<p style="margin:0;color:#6e8fad;font-size:11px;">cmasparshsaxena@gmail.com</p>' +
+      '</td>' +
+      '</tr>' +
+      '<tr><td colspan="2" style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);margin-top:16px;">' +
+      '<p style="margin:8px 0 0;font-size:10px;color:#3d5a7a;text-align:center;">This message was submitted via the contact form on sparshsaxena.com &nbsp;&middot;&nbsp; Please do not reply to this automated notification.</p>' +
+      '</td></tr>' +
+      '</table>' +
+      '</td></tr>' +
+
       '</table>' +
       '</td></tr></table>' +
       '</body></html>'
