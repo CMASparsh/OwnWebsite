@@ -1265,10 +1265,15 @@
           <fieldset>
             <select name="service_required" required>
               <option value="" disabled selected>Select Service Required</option>
-              <option value="Cost & Stock Audit">Cost Audit &amp; Stock Audit</option>
-              <option value="GST">GST Registration &amp; Filing</option>
-              <option value="Income Tax">Income Tax &amp; TDS Filing</option>
-              <!-- ... other options ... -->
+              <option value="Cost Audit &amp; Stock Audit">Cost Audit &amp; Stock Audit</option>
+              <option value="GST Registration &amp; Filing">GST Registration &amp; Filing</option>
+              <option value="Income Tax &amp; TDS Filing">Income Tax &amp; TDS Filing</option>
+              <option value="Company Incorporation &amp; ROC">Company Incorporation &amp; ROC</option>
+              <option value="CMA Data &amp; Project Reports">CMA Data &amp; Project Reports</option>
+              <option value="ESIC &amp; EPFO Compliance">ESIC &amp; EPFO Compliance</option>
+              <option value="Management Consulting">Management Consulting</option>
+              <option value="Insolvency &amp; IBC Matters">Insolvency &amp; IBC Matters</option>
+              <option value="Personal Financial Advisory">Personal Financial Advisory</option>
               <option value="Other">Other</option>
             </select>
           </fieldset>
@@ -1453,6 +1458,9 @@
 
 <script>
   // Contact Form — FormSubmit AJAX (no backend required)
+  // IMPORTANT: FormSubmit requires one-time email activation.
+  // The first submission triggers a verification email to cmasparshsaxena@gmail.com.
+  // The owner must click "Activate Form" in that email before submissions are delivered.
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = e.target;
@@ -1498,9 +1506,42 @@
       }
     })
     .catch(function() {
+      /* Build a pre-filled mailto: link so the inquiry can still be sent directly */
+      var mailtoBody = 'Name: ' + name
+        + '\nPhone: ' + phone
+        + '\nEmail: ' + email
+        + '\nService Required: ' + service
+        + '\n\nMessage:\n' + message;
+      var mailtoHref = 'mailto:cmasparshsaxena@gmail.com'
+        + '?subject=' + encodeURIComponent('New Website Inquiry from ' + name + ' — Sparsh Saxena & Co.')
+        + '&body='    + encodeURIComponent(mailtoBody);
+
       feedback.className = 'form-feedback form-feedback-error';
       feedback.style.display = 'block';
-      feedback.textContent = '✗ Failed to send message. Please try again or reach us directly at cmasparshsaxena@gmail.com';
+
+      /* Use DOM construction (not innerHTML) to avoid XSS with user-supplied data */
+      feedback.textContent = '';
+
+      var msg = document.createTextNode('✗ Automatic submission failed. ');
+      feedback.appendChild(msg);
+
+      var mailtoLink = document.createElement('a');
+      mailtoLink.href = mailtoHref;
+      mailtoLink.textContent = 'Click here to send via your email app';
+      mailtoLink.style.cssText = 'color:inherit;font-weight:700;';
+      feedback.appendChild(mailtoLink);
+
+      var orMsg = document.createTextNode(', or reach us directly at ');
+      feedback.appendChild(orMsg);
+
+      var directLink = document.createElement('a');
+      directLink.href = 'mailto:cmasparshsaxena@gmail.com';
+      directLink.textContent = 'cmasparshsaxena@gmail.com';
+      directLink.style.cssText = 'color:inherit;font-weight:700;';
+      feedback.appendChild(directLink);
+
+      var endMsg = document.createTextNode('.');
+      feedback.appendChild(endMsg);
     })
     .finally(function() {
       btn.disabled = false;
