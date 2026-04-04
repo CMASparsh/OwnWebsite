@@ -1,0 +1,56 @@
+[
+  {
+    "id": "blog-1",
+    "category": "Income Tax",
+    "badgeClass": "blog-badge-it",
+    "title": "The Government has officially notified the Income Tax Rules, 2026, which will come into effect from 1 April 2026 along with the new Income Tax Act, 2025.",
+    "description": "The Central Government has officially notified the Income Tax Rules, 2026, marking a landmark step in India's ongoing direct tax reform. These rules are scheduled to come into effect from 1st April 2026, simultaneously with the enforcement of the new Income Tax Act, 2025. The updated rules aim to modernise tax administration, streamline compliance procedures, and reduce ambiguity in interpretation. Key changes include revised filing formats, updated provisions for deductions and exemptions, and a simplified framework for assessments and appeals. Businesses and individual taxpayers are advised to review their current tax planning strategies and compliance calendars well in advance of the April 2026 deadline to ensure a smooth transition.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-article/277512/the-government-has-officially-notified-the-income-tax-rules-2026-which-will-come-into-effect-from-1-april-2026-along-with-the-new-income-tax-act-2025"
+  },
+  {
+    "id": "blog-2",
+    "category": "GST",
+    "badgeClass": "blog-badge-gst",
+    "title": "GST Amount Cannot Be Part of Turnover; Including Tax Inflates Value and Can Lead to Double Taxation : Madras High Court.",
+    "description": "In a significant ruling, the Madras High Court has held that the GST amount collected from customers cannot be included in the computation of a taxpayer's turnover. The Court reasoned that GST is a tax collected on behalf of the government and does not represent the seller's revenue. Including the tax component within the turnover figure artificially inflates the reported value and can create unintended consequences, including the risk of double taxation. This judgment has direct implications for taxpayers whose turnover thresholds determine their eligibility for various schemes, audit requirements, and compliance obligations under the GST framework. Businesses should review their turnover computation practices in light of this ruling.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-blog/317/gst-amount-cannot-be-part-of-turnover-including-tax-inflates-value-and-can-lead-to-double-taxation-madras-high-court"
+  },
+  {
+    "id": "blog-3",
+    "category": "GST",
+    "badgeClass": "blog-badge-gst",
+    "title": "Karnataka High Court: Concessional GST benefit under Notification 41/2017 is not available when goods are supplied to a third party manufacturer instead of directly to the merchant exporter.",
+    "description": "The Karnataka High Court has delivered a significant ruling clarifying the scope of the concessional GST rate available under Notification No. 41/2017-Integrated Tax (Rate). The Court held that this benefit — which allows supplies to merchant exporters at a concessional rate — is strictly applicable only when goods are supplied directly to the merchant exporter. Where goods are instead routed through or supplied to a third-party manufacturer on behalf of the merchant exporter, the concessional rate cannot be availed. This judgment underscores the importance of adhering strictly to the conditions prescribed in GST notifications and will require exporters and their supply chain partners to carefully evaluate their transaction structures.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-blog/316/karnataka-high-court-concessional-gst-benefit-under-notification-412017-is-not-available-when-goods-are-supplied-to-a-third-party-manufacturer-instead-of-directly-to-the-merchant-exporter"
+  },
+  {
+    "id": "blog-4",
+    "category": "GST",
+    "badgeClass": "blog-badge-gst",
+    "title": "Issuance of Summary in Form GST DRC-01 alone is Insufficient; Valid and Proper Show Cause Notice Must Be Issued.",
+    "description": "A recent judicial ruling has reinforced that the issuance of a summary in Form GST DRC-01 does not by itself constitute a valid Show Cause Notice (SCN) under the GST law. The Court clarified that a DRC-01 is merely a summary document accompanying the SCN and cannot substitute the requirement of issuing a proper, substantive SCN that sets out the specific grounds, allegations, and the amount of tax alleged to be evaded or short-paid. Taxpayers who have received only DRC-01 summaries without accompanying SCNs should be aware that such proceedings may be legally challengeable. This ruling highlights the critical importance of procedural compliance by tax authorities and the rights of taxpayers to a fair hearing.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-blog/315/issuance-of-summary-in-form-gst-drc-01-alone-is-insufficient-valid-and-proper-show-cause-notice-must-be-issued"
+  },
+  {
+    "id": "blog-5",
+    "category": "Advisory",
+    "badgeClass": "blog-badge-advisory",
+    "title": "Advisory regarding confirmation of \"Tax Liability Breakup, As Applicable\" in GSTR-3B.",
+    "description": "The Goods and Services Tax Network (GSTN) has issued an advisory requiring taxpayers to confirm the breakup of their tax liability as applicable while filing GSTR-3B returns. This advisory directs taxpayers to accurately segregate their tax liabilities into the prescribed heads — IGST, CGST, SGST/UTGST, and Cess — before submission. Incorrect or incomplete breakup of tax liability can lead to mismatches, notices, and potential penalties. Taxpayers and GST practitioners are advised to carefully review their GSTR-3B filings and ensure the tax liability breakup reflects the actual transactions reported in GSTR-1. Non-compliance with this advisory could result in scrutiny from the GST authorities.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-news/2956590/advisory-regarding-confirmation-of-tax-liability-breakup-as-applicable-in-gstr-3b"
+  },
+  {
+    "id": "blog-6",
+    "category": "Advisory",
+    "badgeClass": "blog-badge-advisory",
+    "title": "Advisory on the Payment of pre-deposit while filing of appeal before First Appellate authority.",
+    "description": "The GST Council and GSTN have issued an advisory clarifying the procedure and requirements for payment of pre-deposit when filing appeals before the First Appellate Authority under the GST framework. As per the GST law, a taxpayer wishing to appeal against an order must deposit a specified percentage of the disputed tax amount as a pre-condition for the appeal to be admitted. This advisory provides detailed guidance on the correct challan heads to be used for such pre-deposit payments, the electronic ledger credits that can be utilised, and the process for linking the payment to the specific appeal. Taxpayers pursuing appeals should follow these guidelines carefully to avoid rejection of their appeal on procedural grounds.",
+    "source": "taxonation.com",
+    "url": "https://taxonation.com/show-detail-news/2955792/advisory-on-the-payment-of-pre-deposit-while-filing-of-appeal-before-first-appellate-authority"
+  }
+]
