@@ -280,6 +280,7 @@
     .u-date{font-size:11px;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
     .u-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:3px;}
     .u-desc{font-size:12px;color:var(--textl);line-height:1.55;}
+    .u-source-link{margin-top:6px;}
     .u-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:5px;text-transform:uppercase;letter-spacing:.05em;}
     .badge-it{background:#fff3e0;color:#e65100;}
     .badge-gst{background:#e8f5e9;color:#2e7d32;}
@@ -1312,7 +1313,7 @@
     if(container.querySelector('.updates-loading')){ loadUpdates(tab); }
   }
 
-  // Static curated regulatory updates (FY 2025–2026)
+  // Static curated regulatory updates (fallback only)
   var staticUpdates = {
     it: [
       { date: 'Mar 2026', title: 'New Income Tax Act 2025 – Effective from FY 2026-27', desc: 'The Income Tax Act 2025, passed by Parliament, will replace the 1961 Act from FY 2026-27. It simplifies provisions with taxpayer-friendly language and restructured schedules.', type: 'Amendment' },
@@ -1348,28 +1349,219 @@
     ]
   };
 
-  function loadUpdates(tab){
+  var sourceConfig = {
+    it: {
+      sourceUrl: 'https://www.incometax.gov.in/iec/foportal/news-updates',
+      keywords: ['income tax','incometax','cbdt','circular','notification','order','instruction','press release']
+    },
+    gst: {
+      sourceUrl: 'https://www.gst.gov.in/newsandupdates',
+      keywords: ['gst','cbic','circular','notification','rate','advisory','press release']
+    },
+    mca: {
+      sourceUrl: 'https://www.mca.gov.in/content/mca/global/en/notifications-tender/news-and-updates.html',
+      keywords: ['mca','companies','company','llp','act','notification','circular','amendment','general circular']
+    },
+    icai: {
+      sourceUrl: 'https://icmai.in/icmai/Notifications.php',
+      keywords: ['icmai','cost','cma','audit','notification','guideline','circular','standard','cas']
+    }
+  };
+  var MIN_TITLE_LENGTH = 18;
+  var MAX_TITLE_LENGTH = 260;
+  var MIN_RESPONSE_LENGTH = 100;
+  var MAX_DESC_LENGTH = 220;
+  var MAX_UPDATES = 6;
+  var FETCH_TIMEOUT_MS = 10000;
+  var ALLOWED_SOURCE_HOSTS = ['www.incometax.gov.in','www.gst.gov.in','www.mca.gov.in','icmai.in','www.icmai.in'];
+  var SKIP_TITLES = ['home','about us','contact us','login','register','sitemap','skip to main content','main menu','search'];
+  var CONTENT_BLOCK_SELECTOR = 'li, tr, article, .views-row, .item, .news-item, .notification, .post';
+
+  function normalizeSpace(str){
+    return (str || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function detectType(text){
+    var t = (text || '').toLowerCase();
+    if(t.indexOf('notification') !== -1) return 'Notification';
+    if(t.indexOf('circular') !== -1) return 'Circular';
+    if(t.indexOf('amend') !== -1 || t.indexOf('effective') !== -1) return 'Amendment';
+    if(t.indexOf('advisory') !== -1 || t.indexOf('guideline') !== -1 || t.indexOf('guidance') !== -1) return 'Guideline';
+    if(t.indexOf('compliance') !== -1) return 'Compliance';
+    return 'Update';
+  }
+
+  function extractDate(text){
+    var s = text || '';
+    var patterns = [
+      /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/,
+      /\b(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[\s,]*\d{2,4})\b/i,
+      /\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{2,4})\b/i
+    ];
+    for(var i=0;i<patterns.length;i++){
+      var m = s.match(patterns[i]);
+      if(m && m[1]) return normalizeSpace(m[1]);
+    }
+    return '';
+  }
+
+  function isUsefulTitle(title){
+    var t = (title || '').toLowerCase();
+    if(!t || t.length < MIN_TITLE_LENGTH) return false;
+    if(t.length > MAX_TITLE_LENGTH) return false;
+    for(var i=0;i<SKIP_TITLES.length;i++){ if(t === SKIP_TITLES[i]) return false; }
+    return true;
+  }
+
+  function toAbsoluteUrl(href, base){
+    try { return new URL(href, base).toString(); } catch(e){ return ''; }
+  }
+
+  function isSafeHttpUrl(url){
+    return /^https?:\/\//i.test(url || '');
+  }
+
+  function isAllowedSourceUrl(url){
+    try{
+      var host = new URL(url).hostname.toLowerCase();
+      return ALLOWED_SOURCE_HOSTS.indexOf(host) !== -1;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function hasBlockedScheme(href){
+    var raw = normalizeSpace(href || '').toLowerCase();
+    var decoded = raw;
+    try{ decoded = decodeURIComponent(raw); }catch(e){}
+    return decoded.indexOf('javascript:') === 0 || decoded.indexOf('data:') === 0 || decoded.indexOf('vbscript:') === 0;
+  }
+
+  async function fetchWithTimeout(url, options, timeoutMs){
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, timeoutMs);
+    try{
+      var finalOptions = options || {};
+      finalOptions.signal = controller.signal;
+      return await fetch(url, finalOptions);
+    }finally{
+      clearTimeout(timer);
+    }
+  }
+
+  function truncateAtWord(text, maxLen){
+    var t = normalizeSpace(text || '');
+    if(t.length <= maxLen) return t;
+    var slice = t.slice(0, maxLen);
+    var cut = slice.lastIndexOf(' ');
+    if(cut > Math.floor(maxLen * 0.6)){ slice = slice.slice(0, cut); }
+    return slice + '…';
+  }
+
+  async function fetchHtmlWithProxy(url){
+    if(!isAllowedSourceUrl(url)) throw new Error('Blocked source URL');
+    var proxies = [
+      'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
+      'https://r.jina.ai/' + url
+      ];
+    var lastError;
+    for(var i=0;i<proxies.length;i++){
+      try{
+        var res = await fetchWithTimeout(proxies[i], { cache: 'no-store' }, FETCH_TIMEOUT_MS);
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        var txt = await res.text();
+        if(txt && txt.length > MIN_RESPONSE_LENGTH) return txt;
+      }catch(err){ lastError = err; }
+    }
+    throw lastError || new Error('Unable to fetch source');
+  }
+
+  function parseUpdatesFromHtml(html, tab){
+    var cfg = sourceConfig[tab] || {};
+    var sourceUrl = cfg.sourceUrl || '';
+    var keywords = cfg.keywords || [];
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var seen = {};
+    var candidates = [];
+    var links = Array.prototype.slice.call(doc.querySelectorAll('a[href]'));
+
+    links.forEach(function(a){
+      var title = normalizeSpace(a.textContent || '');
+      if(!isUsefulTitle(title)) return;
+
+      var href = normalizeSpace(a.getAttribute('href') || '');
+      if(!href || href === '#' || hasBlockedScheme(href)) return;
+      var absUrl = toAbsoluteUrl(href, sourceUrl);
+      if(!absUrl || !isSafeHttpUrl(absUrl)) return;
+
+      var block = a.closest(CONTENT_BLOCK_SELECTOR) || a.parentElement || a;
+      var blockText = normalizeSpace((block.textContent || '').replace(title, ''));
+      var combined = (title + ' ' + blockText).toLowerCase();
+
+      var score = 0;
+      for(var i=0;i<keywords.length;i++){ if(combined.indexOf(keywords[i]) !== -1) score += 2; }
+      if(combined.indexOf('notification') !== -1) score += 2;
+      if(combined.indexOf('circular') !== -1) score += 2;
+      if(combined.indexOf('update') !== -1 || combined.indexOf('news') !== -1) score += 1;
+      if(score < 1) return;
+
+      var key = title.toLowerCase();
+      if(seen[key]) return;
+      seen[key] = true;
+
+      candidates.push({
+        date: extractDate(title + ' ' + blockText) || 'Latest',
+        title: title,
+        desc: blockText ? truncateAtWord(blockText, MAX_DESC_LENGTH) : 'No description available.',
+        type: detectType(title + ' ' + blockText),
+        link: absUrl,
+        score: score
+      });
+    });
+
+    candidates.sort(function(a,b){ return b.score - a.score; });
+    return candidates.slice(0, MAX_UPDATES).map(function(x){
+      return { date: x.date, title: x.title, desc: x.desc, type: x.type, link: x.link };
+    });
+  }
+
+  function renderUpdates(container, tab, items){
+    var badgeMap = { it:'badge-it', gst:'badge-gst', mca:'badge-mca', icai:'badge-icai' };
+    var html = '';
+    items.forEach(function(item){
+      var safeLink = isSafeHttpUrl(item.link || '') ? item.link : '';
+      var linkHtml = safeLink
+        ? ('<div class="u-desc u-source-link"><a href="'+escHtml(safeLink)+'" target="_blank" rel="noopener noreferrer" aria-label="View source (opens in new tab)">View source</a></div>')
+        : '';
+      html += '<div class="update-item">'
+        + '<div class="u-date">'+escHtml(item.date||'')+'</div>'
+        + '<div class="u-title">'+escHtml(item.title||'')+'</div>'
+        + '<div class="u-desc">'+escHtml(item.desc||'')+'</div>'
+        + '<span class="u-badge '+badgeMap[tab]+'">'+escHtml(item.type||'')+'</span>'
+        + linkHtml
+        + '</div>';
+    });
+    container.innerHTML = html || '<div class="update-item"><div class="u-desc">No updates available.</div></div>';
+  }
+
+  async function loadUpdates(tab){
     var container = document.getElementById('updates-'+tab);
     var btn = document.querySelector('#panel-'+tab+' .refresh-btn');
     if(btn){ btn.disabled = true; btn.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Loading'; }
     container.innerHTML = '<div class="updates-loading"><div class="spinner"></div>Loading updates...</div>';
-
-    var badgeMap = { it:'badge-it', gst:'badge-gst', mca:'badge-mca', icai:'badge-icai' };
-
-    setTimeout(function(){
-      var items = staticUpdates[tab] || [];
-      var html = '';
-      items.forEach(function(item){
-        html += '<div class="update-item">'
-          + '<div class="u-date">'+escHtml(item.date||'')+'</div>'
-          + '<div class="u-title">'+escHtml(item.title||'')+'</div>'
-          + '<div class="u-desc">'+escHtml(item.desc||'')+'</div>'
-          + '<span class="u-badge '+badgeMap[tab]+'">'+escHtml(item.type||'')+'</span>'
-          + '</div>';
-      });
-      container.innerHTML = html || '<div class="update-item"><div class="u-desc">No updates available.</div></div>';
+    try{
+      var cfg = sourceConfig[tab] || {};
+      if(!cfg.sourceUrl) throw new Error('Missing source config');
+      var html = await fetchHtmlWithProxy(cfg.sourceUrl);
+      var liveItems = parseUpdatesFromHtml(html, tab);
+      if(!liveItems.length) throw new Error('No parsable updates');
+      renderUpdates(container, tab, liveItems);
+    }catch(err){
+      console.warn('Failed to fetch live updates for tab:', tab, err);
+      renderUpdates(container, tab, staticUpdates[tab] || []);
+    }finally{
       if(btn){ btn.disabled = false; btn.innerHTML = '<i class="fa fa-refresh"></i> Refresh'; }
-    }, 400);
+    }
   }
 
   function escHtml(s){ var d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
